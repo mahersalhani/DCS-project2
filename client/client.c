@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 
-#define PORT 3000
+#define PORT 3002
 #define BUFFER_SIZE 1024
 
 // {"message":"Key 'name' set to 'nadir'."}

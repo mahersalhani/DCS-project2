@@ -6,6 +6,24 @@ const port = 3000;
 // Middleware to parse JSON bodies
 app.use(express.json());
 
+// Limit the number of active connections
+const MAX_CLIENTS = 5; // Set the maximum number of clients
+let activeClients = 0;
+
+// Middleware to check the number of active connections
+app.use((req, res, next) => {
+  if (activeClients >= MAX_CLIENTS) {
+    return res.status(503).json({ message: "Server is busy. Try again later." });
+  }
+  activeClients++;
+  console.log(activeClients)
+  res.on("finish", () => {
+    activeClients--;
+    console.log(activeClients)
+  });
+  next();
+});
+
 // Key-Value store
 const keyValueStore = {};
 
